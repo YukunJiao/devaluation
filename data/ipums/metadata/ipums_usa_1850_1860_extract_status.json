@@ -1,0 +1,53 @@
+{
+  "version": 1,
+  "data_structure": {
+    "rectangular": {
+      "on": "P"
+    }
+  },
+  "data_format": "csv",
+  "description": "devaluation occupational data 1850 and 1860 1pct",
+  "samples": {
+    "us1850a": {},
+    "us1860a": {}
+  },
+  "variables": {
+    "YEAR": {
+      "preselected": true
+    },
+    "SAMPLE": {
+      "preselected": true
+    },
+    "SERIAL": {
+      "preselected": true
+    },
+    "HHWT": {
+      "preselected": true
+    },
+    "CLUSTER": {
+      "preselected": true
+    },
+    "STATEFIP": {},
+    "STRATA": {
+      "preselected": true
+    },
+    "GQ": {
+      "preselected": true
+    },
+    "PERNUM": {
+      "preselected": true
+    },
+    "PERWT": {
+      "preselected": true
+    },
+    "SEX": {},
+    "AGE": {},
+    "RACE": {},
+    "OCC": {},
+    "OCC1950": {},
+    "OCCSTR": {}
+  },
+  "number": 1,
+  "status": "published",
+  "download_links": {}
+}

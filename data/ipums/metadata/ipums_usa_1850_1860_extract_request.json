@@ -1,0 +1,27 @@
+{
+  "description": "devaluation occupational data 1850 and 1860 1pct",
+  "data_structure": {
+    "rectangular": {
+      "on": "P"
+    }
+  },
+  "data_format": "csv",
+  "samples": {
+    "us1850a": {},
+    "us1860a": {}
+  },
+  "variables": {
+    "YEAR": {},
+    "SAMPLE": {},
+    "SERIAL": {},
+    "PERNUM": {},
+    "PERWT": {},
+    "AGE": {},
+    "SEX": {},
+    "RACE": {},
+    "STATEFIP": {},
+    "OCC": {},
+    "OCC1950": {},
+    "OCCSTR": {}
+  }
+}

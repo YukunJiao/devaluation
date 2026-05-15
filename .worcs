@@ -1,0 +1,6 @@
+worcs_version: 0.1.20
+creator: doge
+entry_point: manuscript/manuscript.Rmd
+recipe:
+  recipe: targets::tar_make()
+  terminal: no

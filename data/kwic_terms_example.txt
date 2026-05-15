@@ -1,0 +1,6 @@
+# One keyword or phrase per line.
+# Replace these with your occupation/dimension terms.
+nurse
+teacher
+secretary
+housekeeper

@@ -12,6 +12,43 @@
 
 You can load this project in RStudio by opening the file called 'devaluation.Rproj'.
 
+## American Stories KWIC extraction
+
+This project includes a lightweight extractor for keyword-in-context rows from
+the American Stories dataset. American Stories is distributed as one compressed
+archive per year, so the extractor scans selected years and writes only matching
+contexts to CSV.
+
+Example pilot run:
+
+```bash
+conda run -n amstories python scripts/americanstories_kwic.py \
+  --years 1870 \
+  --terms-file data/kwic_terms_example.txt \
+  --window 50 \
+  --max-rows-per-year-term 1000 \
+  --max-articles 5000 \
+  --timeout-seconds 600 \
+  --out data/kwic/americanstories_1870_pilot.csv
+```
+
+To keep downloaded yearly archives for reuse, add a cache directory and
+`--keep-archives`:
+
+```bash
+conda run -n amstories python scripts/americanstories_kwic.py \
+  --years 1870 1880 1890 \
+  --terms nurse teacher secretary \
+  --window 50 \
+  --cache-dir data/raw/americanstories \
+  --keep-archives \
+  --out data/kwic/americanstories_kwic.csv
+```
+
+The output includes article metadata, `left`, `match`, `right`, and a combined
+`context` column that can be passed into downstream R workflows such as
+`conText`.
+
 ## Project structure
 
 <!--  You can add rows to this table, using "|" to separate columns.         -->
