@@ -9,7 +9,7 @@ library(targets)
 
 # Set target options:
 tar_option_set(
-  packages = c("tibble") # Packages that your targets need for their tasks.
+  packages = c("dplyr", "tibble") # Packages that your targets need for their tasks.
   # format = "qs", # Optionally set the default storage format. qs is fast.
   #
   # Pipelines that take a long time to run may benefit from
@@ -49,16 +49,34 @@ tar_source()
 # tar_source("other_functions.R") # Source other scripts as needed.
 
 
-# Replace the target list below with your own:
 list(
   tar_target(
-    name = data,
-    command = tibble(x = rnorm(100), y = rnorm(100))
-    # format = "qs" # Efficient storage for general data objects.
+    name = ipums_files,
+    command = list_ipums_files()
   ),
   tar_target(
-    name = model,
-    command = coefficients(lm(y ~ x, data = data))
+    name = kwic_files,
+    command = list_kwic_files()
   ),
-  tarchetypes::tar_render(manuscript, "manuscript/manuscript.Rmd")
+  tar_target(
+    name = ipums_microdata,
+    command = read_ipums_microdata(ipums_files)
+  ),
+  tar_target(
+    name = americanstories_kwic,
+    command = read_kwic_data(kwic_files)
+  ),
+  tar_target(
+    name = ipums_occupations,
+    command = summarize_ipums_occupations(ipums_microdata)
+  ),
+  tar_target(
+    name = americanstories_mentions,
+    command = summarize_kwic_mentions(americanstories_kwic)
+  ),
+  tar_target(
+    name = occupation_language_bridge,
+    command = bridge_kwic_to_ipums(americanstories_mentions, ipums_occupations)
+  )
+  # tarchetypes::tar_render(manuscript, "manuscript/manuscript.Rmd")
 )

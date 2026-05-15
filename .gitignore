@@ -2,6 +2,8 @@
 .Rprofile
 .Renviron
 *.csv
+*.csv.gz
+*.dat.gz
 *.sav
 *.sas7bdat
 *.xlsx
@@ -12,4 +14,6 @@
 *.tex
 .Rproj.user
 .positai
+_targets/
+data/ipums/raw/
 data/raw/americanstories/

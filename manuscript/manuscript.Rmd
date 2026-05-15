@@ -18,9 +18,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(targets)
 tar_config_set(store = "../_targets")
-tar_load(model)
+tar_load(c(ipums_occupations, americanstories_mentions, occupation_language_bridge))
 # You can interact with tar objects as usual, e.g.:
-# print(model)
+# print(ipums_occupations)
 ```
 
 This manuscript uses the Workflow for Open Reproducible Code in Science [WORCS version 0.1.2, @vanlissaWORCSWorkflowOpen2021] to ensure reproducibility and transparency.
@@ -31,24 +31,27 @@ This is an example of a non-essential citation [@@vanlissaWORCSWorkflowOpen2021]
 <!--The function below inserts a notification if the manuscript is knit using synthetic data.-->
 `r notify_synthetic()`
 
-## GitHub Documents
+## Analysis Plan
 
-This is an R Markdown format used for publishing markdown documents to GitHub. When you click the **Knit** button all R code chunks are run and a markdown file (.md) suitable for publishing to GitHub is generated.
+This analysis links two views of occupational devaluation between 1850 and 1880:
+IPUMS census microdata, which gives weighted occupational composition, and
+American Stories keyword-in-context rows, which give newspaper language around
+selected occupations.
 
-## Including Code
+## IPUMS Occupational Composition
 
-You can include R code in the document as follows:
-
-```{r cars}
-summary(cars)
+```{r ipums-occupations}
+head(ipums_occupations, 20)
 ```
 
-## Including Plots
+## American Stories Mentions
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r americanstories-mentions}
+head(americanstories_mentions, 20)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Matched Occupation-Language View
+
+```{r bridge}
+head(occupation_language_bridge, 20)
+```

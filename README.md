@@ -49,6 +49,44 @@ The output includes article metadata, `left`, `match`, `right`, and a combined
 `context` column that can be passed into downstream R workflows such as
 `conText`.
 
+## IPUMS 1850-1880 extract
+
+Add your IPUMS API token to `.Renviron`:
+
+```r
+IPUMS_API_KEY=your_token_here
+```
+
+Then request, check, and download the IPUMS USA 1% samples for 1850, 1860, 1870,
+and 1880:
+
+```bash
+Rscript scripts/ipums_extract.R submit
+Rscript scripts/ipums_extract.R status
+Rscript scripts/ipums_extract.R download
+```
+
+The extract definition is stored in
+`data/ipums/metadata/ipums_usa_1850_1880_extract_request.json`. Downloaded CSV
+files should land under `data/ipums/raw/`, which is ignored by git.
+
+## Analysis pipeline
+
+The `targets` pipeline now reads IPUMS CSV files from `data/ipums/`, American
+Stories KWIC CSV files from `data/kwic/`, and creates three analysis objects:
+
+```r
+targets::tar_make()
+targets::tar_read(ipums_occupations)
+targets::tar_read(americanstories_mentions)
+targets::tar_read(occupation_language_bridge)
+```
+
+`ipums_occupations` summarizes weighted occupational composition and female
+share by year and `OCC1950`. `americanstories_mentions` summarizes keyword
+mentions by year. `occupation_language_bridge` gives a first-pass match between
+KWIC keywords and IPUMS occupation strings.
+
 ## Project structure
 
 <!--  You can add rows to this table, using "|" to separate columns.         -->
