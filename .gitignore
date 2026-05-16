@@ -15,5 +15,10 @@
 .Rproj.user
 .positai
 _targets/
+gloVe/
+gloVe-*.zip
+data/embeddings/
 data/ipums/raw/
+data/ipums/metadata/*extract_status.json
+data/ipums/metadata/*manifest.json
 data/raw/americanstories/

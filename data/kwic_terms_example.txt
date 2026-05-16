@@ -1,6 +1,22 @@
 # One keyword or phrase per line.
-# Replace these with your occupation/dimension terms.
+# Occupation terms for American Stories/IPUMS comparison.
 nurse
 teacher
 secretary
 housekeeper
+servant
+domestic servant
+cook
+laundress
+washerwoman
+seamstress
+dressmaker
+milliner
+tailor
+clerk
+bookkeeper
+stenographer
+telegraph operator
+factory operative
+laborer
+farmer

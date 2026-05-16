@@ -18,7 +18,19 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(targets)
 tar_config_set(store = "../_targets")
-tar_load(c(ipums_occupations, americanstories_mentions, occupation_language_bridge))
+tar_load(c(
+  ipums_occupations,
+  americanstories_mentions,
+  americanstories_term_coverage,
+  americanstories_keyword_shares,
+  americanstories_keyword_change,
+  americanstories_context_words,
+  americanstories_context_samples,
+  americanstories_alc_distances,
+  americanstories_gender_projections,
+  americanstories_gender_projection_change,
+  occupation_language_bridge
+))
 # You can interact with tar objects as usual, e.g.:
 # print(ipums_occupations)
 ```
@@ -33,10 +45,10 @@ This is an example of a non-essential citation [@@vanlissaWORCSWorkflowOpen2021]
 
 ## Analysis Plan
 
-This analysis links two views of occupational devaluation between 1850 and 1880:
-IPUMS census microdata, which gives weighted occupational composition, and
-American Stories keyword-in-context rows, which give newspaper language around
-selected occupations.
+This analysis links two views of occupational devaluation: IPUMS census
+microdata for 1850-1880, which gives weighted occupational composition, and
+American Stories keyword-in-context rows for 1850-1900, which give newspaper
+language around selected occupations.
 
 ## IPUMS Occupational Composition
 
@@ -48,6 +60,56 @@ head(ipums_occupations, 20)
 
 ```{r americanstories-mentions}
 head(americanstories_mentions, 20)
+```
+
+## American Stories Term Coverage
+
+```{r americanstories-term-coverage}
+americanstories_term_coverage
+```
+
+## American Stories Keyword Shares
+
+```{r americanstories-keyword-shares}
+americanstories_keyword_shares
+```
+
+## American Stories Keyword Change
+
+```{r americanstories-keyword-change}
+americanstories_keyword_change
+```
+
+## American Stories Context Words
+
+```{r americanstories-context-words}
+head(americanstories_context_words, 40)
+```
+
+## American Stories Context Samples
+
+```{r americanstories-context-samples}
+head(americanstories_context_samples, 20)
+```
+
+## American Stories ALC Distances
+
+```{r americanstories-alc-distances}
+americanstories_alc_distances
+```
+
+## American Stories Gender Direction
+
+Positive projection scores indicate greater alignment with the feminine side of
+the seed-pair direction. Centered scores compare each occupation to the average
+projection among observed target occupations in the same year.
+
+```{r americanstories-gender-projections}
+americanstories_gender_projections
+```
+
+```{r americanstories-gender-projection-change}
+americanstories_gender_projection_change
 ```
 
 ## Matched Occupation-Language View

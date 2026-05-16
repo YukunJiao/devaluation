@@ -16,6 +16,7 @@ import json
 import os
 import re
 import shutil
+import ssl
 import sys
 import tarfile
 import tempfile
@@ -156,9 +157,20 @@ def download_year(year: str, target: Path) -> None:
     target.parent.mkdir(parents=True, exist_ok=True)
     tmp = target.with_suffix(target.suffix + ".tmp")
     print(f"Downloading {year}: {url}", file=sys.stderr)
-    with urllib.request.urlopen(url) as response, open(tmp, "wb") as out:
+    with urllib.request.urlopen(url, context=https_context()) as response, open(tmp, "wb") as out:
         shutil.copyfileobj(response, out)
     tmp.replace(target)
+
+
+def https_context() -> ssl.SSLContext:
+    if os.environ.get("AMSTORIES_INSECURE_SSL") == "1":
+        return ssl._create_unverified_context()
+    try:
+        import certifi
+
+        return ssl.create_default_context(cafile=certifi.where())
+    except ImportError:
+        return ssl.create_default_context()
 
 
 def open_archive(year: str, args: argparse.Namespace) -> tuple[BinaryIO, Path | None]:

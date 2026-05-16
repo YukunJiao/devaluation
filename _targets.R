@@ -51,12 +51,52 @@ tar_source()
 
 list(
   tar_target(
+    name = kwic_terms_file,
+    command = "data/kwic_terms_example.txt",
+    format = "file"
+  ),
+  tar_target(
+    name = occupation_terms,
+    command = read_terms_file(kwic_terms_file)
+  ),
+  tar_target(
+    name = ipums_manifest,
+    command = prepare_ipums_data(),
+    format = "file",
+    cue = tar_cue(mode = "always")
+  ),
+  tar_target(
+    name = americanstories_kwic_file,
+    command = run_americanstories_kwic(terms_file = kwic_terms_file),
+    format = "file"
+  ),
+  tar_target(
+    name = glove_subset_script,
+    command = "scripts/subset_glove.py",
+    format = "file"
+  ),
+  tar_target(
+    name = glove_vocab_embeddings_file,
+    command = {
+      americanstories_kwic_file
+      glove_subset_script
+      run_glove_subset()
+    },
+    format = "file"
+  ),
+  tar_target(
     name = ipums_files,
-    command = list_ipums_files()
+    command = {
+      ipums_manifest
+      list_ipums_files()
+    }
   ),
   tar_target(
     name = kwic_files,
-    command = list_kwic_files()
+    command = {
+      americanstories_kwic_file
+      list_kwic_files()
+    }
   ),
   tar_target(
     name = ipums_microdata,
@@ -64,7 +104,7 @@ list(
   ),
   tar_target(
     name = americanstories_kwic,
-    command = read_kwic_data(kwic_files)
+    command = read_kwic_data(americanstories_kwic_file)
   ),
   tar_target(
     name = ipums_occupations,
@@ -73,6 +113,50 @@ list(
   tar_target(
     name = americanstories_mentions,
     command = summarize_kwic_mentions(americanstories_kwic)
+  ),
+  tar_target(
+    name = americanstories_term_coverage,
+    command = summarize_term_coverage(occupation_terms, americanstories_mentions)
+  ),
+  tar_target(
+    name = americanstories_keyword_shares,
+    command = summarize_kwic_shares(americanstories_mentions)
+  ),
+  tar_target(
+    name = americanstories_keyword_change,
+    command = summarize_kwic_change(americanstories_keyword_shares)
+  ),
+  tar_target(
+    name = americanstories_context_words,
+    command = summarize_kwic_context_words(americanstories_kwic)
+  ),
+  tar_target(
+    name = americanstories_context_samples,
+    command = sample_kwic_contexts(americanstories_kwic)
+  ),
+  tar_target(
+    name = glove_vocab_embeddings,
+    command = read_glove_subset(glove_vocab_embeddings_file)
+  ),
+  tar_target(
+    name = americanstories_alc_embeddings,
+    command = compute_alc_embeddings(americanstories_kwic, glove_vocab_embeddings)
+  ),
+  tar_target(
+    name = americanstories_alc_distances,
+    command = summarize_alc_distances(americanstories_alc_embeddings)
+  ),
+  tar_target(
+    name = gender_direction,
+    command = construct_gender_direction(glove_vocab_embeddings)
+  ),
+  tar_target(
+    name = americanstories_gender_projections,
+    command = project_embeddings_on_gender(americanstories_alc_embeddings, gender_direction)
+  ),
+  tar_target(
+    name = americanstories_gender_projection_change,
+    command = summarize_gender_projection_change(americanstories_gender_projections)
   ),
   tar_target(
     name = occupation_language_bridge,
